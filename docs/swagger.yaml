@@ -1,0 +1,860 @@
+definitions:
+  config.UpdateRemoteOpt:
+    properties:
+      all:
+        description: If set then ask all the questions, not just the post config questions
+        type: boolean
+      continue:
+        description: If set then supply state and result parameters to continue the
+          process
+        type: boolean
+      edit:
+        description: If set then edit existing values
+        type: boolean
+      noObscure:
+        description: Treat all passwords as obscured
+        type: boolean
+      nonInteractive:
+        description: Don't interact with the user - return questions
+        type: boolean
+      obscure:
+        description: Treat all passwords as plain that need obscuring
+        type: boolean
+      result:
+        description: Result to return - used with Continue
+        type: string
+      state:
+        description: State to restart with - used with Continue
+        type: string
+    type: object
+  fs.Metadata:
+    additionalProperties:
+      type: string
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.BulkRenameFilesRequest:
+    properties:
+      nameMap:
+        additionalProperties:
+          type: string
+        type: object
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.CheckEqualRequest:
+    properties:
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.CopyFileRequest:
+    properties:
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.CopyURLRequest:
+    properties:
+      autoFilename:
+        type: boolean
+      dstFilenameFromHeader:
+        type: boolean
+      noClobber:
+        type: boolean
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      url:
+        type: string
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest:
+    properties:
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.FileItem:
+    properties:
+      mimeType:
+        type: string
+      modTime:
+        type: string
+      name:
+        type: string
+      size:
+        type: integer
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.FilterType:
+    enum:
+    - prefix
+    - suffix
+    - regex
+    - wildcard
+    type: string
+    x-enum-varnames:
+    - FilterTypePrefix
+    - FilterTypeSuffix
+    - FilterTypeRegex
+    - FilterTypeWildcard
+  github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest:
+    properties:
+      filter:
+        type: string
+      filterType:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilterType'
+      options:
+        $ref: '#/definitions/operations.ListJSONOpt'
+      path:
+        type: string
+      recurse:
+        type: boolean
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ListFilesData:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/operations.ListJSONItem'
+        type: array
+      total:
+        type: integer
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest:
+    properties:
+      options:
+        $ref: '#/definitions/operations.ListJSONOpt'
+      path:
+        type: string
+      recurse:
+        type: boolean
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesData'
+      error:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.Error'
+      success:
+        type: boolean
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.MoveBackupDirRequest:
+    properties:
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest:
+    properties:
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ReadFileData:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FileItem'
+        type: array
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ReadFileRequest:
+    properties:
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.ReadFileResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ReadFileData'
+      error:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.Error'
+      success:
+        type: boolean
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration:
+    properties:
+      name:
+        type: string
+      options:
+        $ref: '#/definitions/config.UpdateRemoteOpt'
+      parameters:
+        additionalProperties: true
+        type: object
+      type:
+        type: string
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.RmdirRequest:
+    properties:
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest:
+    properties:
+      leaveRoot:
+        type: boolean
+      path:
+        type: string
+      remote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.SyncCopyDirRequest:
+    properties:
+      copyEmptyDirs:
+        type: boolean
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.SyncMoveDirRequest:
+    properties:
+      copyEmptyDirs:
+        type: boolean
+      deleteEmptySrcDirs:
+        type: boolean
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.SyncRequest:
+    properties:
+      copyEmptyDirs:
+        type: boolean
+      destinationPath:
+        type: string
+      destinationRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+      sourcePath:
+        type: string
+      sourceRemote:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RemoteConfiguration'
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.WriteFileData:
+    properties:
+      files:
+        items:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FileItem'
+        type: array
+    type: object
+  github_com_kommunkod_restclone_pkg_rclone.WriteFileResponse:
+    properties:
+      data:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.WriteFileData'
+      error:
+        $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.Error'
+      success:
+        type: boolean
+    type: object
+  operations.ListJSONItem:
+    properties:
+      encrypted:
+        type: string
+      encryptedPath:
+        type: string
+      hashes:
+        additionalProperties:
+          type: string
+        type: object
+      id:
+        type: string
+      isBucket:
+        type: boolean
+      isDir:
+        type: boolean
+      metadata:
+        $ref: '#/definitions/fs.Metadata'
+      mimeType:
+        type: string
+      modTime:
+        allOf:
+        - $ref: '#/definitions/operations.Timestamp'
+        description: '`json:",omitempty"`'
+      name:
+        type: string
+      origID:
+        type: string
+      path:
+        type: string
+      size:
+        type: integer
+      tier:
+        type: string
+    type: object
+  operations.ListJSONOpt:
+    properties:
+      dirsOnly:
+        type: boolean
+      filesOnly:
+        type: boolean
+      hashTypes:
+        description: hash types to show if ShowHash is set, e.g. "MD5", "SHA-1"
+        items:
+          type: string
+        type: array
+      metadata:
+        type: boolean
+      noMimeType:
+        type: boolean
+      noModTime:
+        type: boolean
+      recurse:
+        type: boolean
+      showEncrypted:
+        type: boolean
+      showHash:
+        type: boolean
+      showOrigIDs:
+        type: boolean
+    type: object
+  operations.Timestamp:
+    properties:
+      format:
+        type: string
+      when:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/bulk/rename:
+    post:
+      consumes:
+      - application/json
+      description: Bulk Rename Files
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.BulkRenameFilesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Bulk Rename Files
+      tags:
+      - files
+  /api/v1/compare:
+    post:
+      consumes:
+      - application/json
+      description: Check if two files are equal
+      parameters:
+      - description: Check Equal Request
+        in: body
+        name: checkEqualRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.CheckEqualRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Checked successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Check if two files are equal
+      tags:
+      - files
+  /api/v1/copyFile:
+    post:
+      consumes:
+      - application/json
+      description: Copy File
+      parameters:
+      - description: Copy File Request
+        in: body
+        name: copyFileRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.CopyFileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File copied successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Copy File
+      tags:
+      - files
+  /api/v1/copyUrl:
+    post:
+      consumes:
+      - application/json
+      description: Copy URL to destination filesystem
+      parameters:
+      - description: Copy URL Request
+        in: body
+        name: copyURLRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.CopyURLRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File copied successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Copy URL to destination filesystem
+      tags:
+      - files
+  /api/v1/file/read:
+    post:
+      consumes:
+      - application/json
+      description: Read File
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ReadFileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ReadFileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Read File
+      tags:
+      - files
+  /api/v1/file/write:
+    put:
+      consumes:
+      - multipart/form-data
+      description: Write File. You can attach an arbitrary number of files to the
+        request. All have to be placed in the "file" field.
+      parameters:
+      - description: File
+        in: formData
+        name: file
+        required: true
+        type: file
+      - description: Remote Configuration
+        in: formData
+        name: remote
+        required: true
+        type: string
+      - description: Path
+        in: formData
+        name: path
+        required: true
+        type: string
+      - description: Overwrite
+        in: formData
+        name: overwrite
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.WriteFileResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Write File
+      tags:
+      - files
+  /api/v1/files/delete:
+    post:
+      consumes:
+      - application/json
+      description: Delete File
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest'
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: File deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete File
+      tags:
+      - files
+  /api/v1/files/moveBackupDir:
+    post:
+      consumes:
+      - application/json
+      description: Move a file to a backup directory
+      parameters:
+      - description: Move Backup Dir Request
+        in: body
+        name: moveBackupDirRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveBackupDirRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Backup directory moved successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Move Backup Dir
+      tags:
+      - files
+  /api/v1/files/moveFile:
+    post:
+      consumes:
+      - application/json
+      description: Move File
+      parameters:
+      - description: Move File Request
+        in: body
+        name: moveFileRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File moved successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Move File
+      tags:
+      - files
+  /api/v1/files/removeDir:
+    post:
+      consumes:
+      - application/json
+      description: Removes an empty directory
+      parameters:
+      - description: Remove Directory Request
+        in: body
+        name: rmdirsRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Removed successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove Empty Directory
+      tags:
+      - files
+  /api/v1/files/removeDirs:
+    post:
+      consumes:
+      - application/json
+      description: Recursively remove directories
+      parameters:
+      - description: Remove Directories Request
+        in: body
+        name: rmdirsRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Removed successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove Directories
+      tags:
+      - files
+  /api/v1/files/sync:
+    post:
+      consumes:
+      - application/json
+      description: Sync
+      parameters:
+      - description: Sync Request
+        in: body
+        name: syncRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Synced successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Sync
+      tags:
+      - files
+  /api/v1/files/syncCopyDir:
+    post:
+      consumes:
+      - application/json
+      description: Sync CopyDir
+      parameters:
+      - description: Sync CopyDir Request
+        in: body
+        name: syncCopyDirRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncCopyDirRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Synced successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Sync CopyDir
+      tags:
+      - files
+  /api/v1/files/syncMoveDir:
+    post:
+      consumes:
+      - application/json
+      description: Sync MoveDir
+      parameters:
+      - description: Sync MoveDir Request
+        in: body
+        name: syncMoveDirRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncMoveDirRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Synced successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Sync MoveDir
+      tags:
+      - files
+  /api/v1/filterlist:
+    post:
+      consumes:
+      - application/json
+      description: List files in a given directory with a filter
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Filtered List Files
+      tags:
+      - files
+  /api/v1/list:
+    post:
+      consumes:
+      - application/json
+      description: List Files
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List Files
+      tags:
+      - files
+swagger: "2.0"

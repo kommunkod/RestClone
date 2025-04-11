@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
+
+before:
+  hooks:
+    - go mod tidy
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+      - x86_64
+      
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+
+    format_overrides:
+      - goos: windows
+        format: zip
+
+
+nfpms:
+  - id: restclone
+    package_name: "restclone"
+    description: "RestClone: Stateless Rclone API"
+    vendor: "Kommunkod"
+    maintainer: Höglandets IT <kod@hoglandet.se>
+    file_name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    formats:
+      - deb
+      - apk
+      - rpm
+    bindir: /usr/local/bin
+
+kos:
+  - id: restclone
+    repositories:
+      - ghcr.io/kommunkod/restclone
+      - kommun/restclone
+    tags:
+      - v{{ .Version }}
+      - latest
+    bare: true
+    user: 65534:65534
+    platforms:
+      - linux/arm64
+      - linux/amd64
+    env:
+      - CGO_ENABLED=0
+
+release:
+  github:
+    owner: kommunkod
+    name: RestClone
+
+
