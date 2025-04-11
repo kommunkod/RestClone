@@ -4,6 +4,7 @@ version: 2
 before:
   hooks:
     - go mod tidy
+    - go tool swag init -g cmd/main.go --output docs --md . --parseDependency
 
 changelog:
   sort: asc
@@ -37,7 +38,6 @@ archives:
     format_overrides:
       - goos: windows
         format: zip
-
 
 nfpms:
   - id: restclone
