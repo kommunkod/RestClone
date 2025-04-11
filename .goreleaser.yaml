@@ -14,7 +14,9 @@ changelog:
       - "^test:"
 
 builds:
-  - env:
+  - id: restclone
+    main: ./cmd/main.go
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
@@ -25,7 +27,8 @@ builds:
       - arm64
       
 archives:
-  - format: tar.gz
+  - id: restclone
+    formats: [ tar.gz ]
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -36,7 +39,7 @@ archives:
 
     format_overrides:
       - goos: windows
-        format: zip
+        formats: [ zip ]
 
 nfpms:
   - id: restclone
