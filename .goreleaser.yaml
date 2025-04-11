@@ -15,7 +15,7 @@ changelog:
 
 builds:
   - id: restclone
-    main: ./cmd/main.go
+    main: ./cmd/
     env:
       - CGO_ENABLED=0
     goos:
