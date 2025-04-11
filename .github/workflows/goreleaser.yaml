@@ -2,12 +2,12 @@ name: Build and Publish Packages
 
 on:
   push:
-    branches:
-      - main
     tags: ["*.*.*"]
 
 permissions:
   contents: write
+  packages: write
+  id-token: write
 
 jobs:
   build:
@@ -34,11 +34,6 @@ jobs:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Generate Swagger Docs
-      run: |
-        go mod tidy
-        go tool swag init -g cmd/main.go --output docs --md . --parseDepth 200 --parseDependency
 
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v6
