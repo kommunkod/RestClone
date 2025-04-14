@@ -4,7 +4,7 @@ version: 2
 before:
   hooks:
     - go mod tidy
-    - go tool swag init -g cmd/server/main.go --output docs --md . --parseDependency
+    - go tool swag init -g cmd/http/main.go --output docs --md . --parseDependency
 
 changelog:
   sort: asc
@@ -15,7 +15,7 @@ changelog:
 
 builds:
   - id: restclone
-    main: ./cmd/
+    main: ./cmd/http/
     env:
       - CGO_ENABLED=0
     goos:
