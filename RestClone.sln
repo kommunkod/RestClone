@@ -1,0 +1,32 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pkg", "pkg", "{2CACE873-F0F8-81F3-56EC-A1F4A4ABD967}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "clients", "clients", "{C17871C8-1AE1-3148-9580-6C0AF0EAF072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cs", "pkg\clients\cs\cs.csproj", "{0EB1DA5C-0542-1925-7518-12FE16DDD3B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0EB1DA5C-0542-1925-7518-12FE16DDD3B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EB1DA5C-0542-1925-7518-12FE16DDD3B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EB1DA5C-0542-1925-7518-12FE16DDD3B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EB1DA5C-0542-1925-7518-12FE16DDD3B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C17871C8-1AE1-3148-9580-6C0AF0EAF072} = {2CACE873-F0F8-81F3-56EC-A1F4A4ABD967}
+		{0EB1DA5C-0542-1925-7518-12FE16DDD3B2} = {C17871C8-1AE1-3148-9580-6C0AF0EAF072}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6EFCD031-92BE-42D6-AF30-D25418CDA3C8}
+	EndGlobalSection
+EndGlobal

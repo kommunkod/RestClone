@@ -12,7 +12,7 @@ import (
 // Move Backup Dir
 // @Summary Move Backup Dir
 // @Description Move a file to a backup directory
-// @Tags files
+// @Tags File
 // @Accept json
 // @Produce json
 // @Param moveBackupDirRequest body rclone.MoveBackupDirRequest true "Move Backup Dir Request"

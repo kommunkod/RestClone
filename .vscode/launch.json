@@ -5,21 +5,28 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Start Server",
+            "name": "Start HTTP Server",
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "./cmd/",
+            "program": "./cmd/http/",
             "args": [
                 "config.yaml",
                 "config.json"
             ],
-            "cwd": "${workspaceFolder}",
-            // "envFile": [
-            //     "${workspaceFolder}/.env",
-            //     "${workspaceFolder}/.env.local",
-            //     "${workspaceFolder}/.env.dev",
-            // ]
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Start Unix Socket",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "./cmd/http/",
+            "args": [
+                "config.yaml",
+                "config.json"
+            ],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

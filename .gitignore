@@ -32,3 +32,5 @@ tls.crt
 tls.key
 
 xtest*.*
+
+dist/*

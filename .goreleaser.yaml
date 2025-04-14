@@ -4,7 +4,7 @@ version: 2
 before:
   hooks:
     - go mod tidy
-    - go tool swag init -g cmd/main.go --output docs --md . --parseDependency
+    - go tool swag init -g cmd/server/main.go --output docs --md . --parseDependency
 
 changelog:
   sort: asc
@@ -21,64 +21,102 @@ builds:
     goos:
       - linux
       - windows
-      - darwin
+      # - darwin
     goarch:
       - amd64
-      - arm64
-      
-archives:
-  - id: restclone
-    formats: [ tar.gz ]
-    name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
-
-    format_overrides:
-      - goos: windows
-        formats: [ zip ]
-
-nfpms:
-  - id: restclone
-    package_name: "restclone"
-    description: "RestClone: Stateless Rclone API"
-    vendor: "Kommunkod"
-    maintainer: Höglandets IT <kod@hoglandet.se>
-    file_name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
-    formats:
-      - deb
-      - apk
-      - rpm
-    bindir: /usr/local/bin
-
-kos:
-  - id: restclone
-    repositories:
-      - ghcr.io/kommunkod/restclone
-      - kommun/restclone
-    tags:
-      - v{{ .Version }}
-      - latest
-    bare: true
-    user: 65534:65534
-    platforms:
-      - linux/arm64
-      - linux/amd64
+      # - arm64
+  - id: restclone-socket
+    main: ./cmd/socket/
     env:
       - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      # - darwin
+    goarch:
+      - amd64
+      # - arm64
+  - id: restclone-socket-cshared
+    main: ./cmd/socket/
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - linux
+    goarch:
+      - amd64
+      # - arm64
+    ldflags:
+      - "-buildmode"
+      - "c-shared"
+      - "-o {{ .ProjectName }}_socket.so"
+  - id: restclone-socket-cshared-win
+    main: ./cmd/socket/
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - windows
+    goarch:
+      - amd64
+      # - arm64
+    ldflags:
+      - "-buildmode"
+      - "c-shared"
+      - "-o {{ .ProjectName }}_socket.dll"
 
-release:
-  github:
-    owner: kommunkod
-    name: RestClone
+# archives:
+#   - id: restclone
+#     formats: [ tar.gz ]
+#     name_template: >-
+#       {{ .ProjectName }}_
+#       {{- title .Os }}_
+#       {{- if eq .Arch "amd64" }}x86_64
+#       {{- else if eq .Arch "386" }}i386
+#       {{- else }}{{ .Arch }}{{ end }}
+#       {{- if .Arm }}v{{ .Arm }}{{ end }}
+
+#     format_overrides:
+#       - goos: windows
+#         formats: [ zip ]
+
+# nfpms:
+#   - id: restclone
+#     package_name: "restclone"
+#     description: "RestClone: Stateless Rclone API"
+#     vendor: "Kommunkod"
+#     maintainer: Höglandets IT <kod@hoglandet.se>
+#     file_name_template: >-
+#       {{ .ProjectName }}_
+#       {{- title .Os }}_
+#       {{- if eq .Arch "amd64" }}x86_64
+#       {{- else if eq .Arch "386" }}i386
+#       {{- else }}{{ .Arch }}{{ end }}
+#       {{- if .Arm }}v{{ .Arm }}{{ end }}
+#     formats:
+#       - deb
+#       - apk
+#       - rpm
+#     bindir: /usr/local/bin
+    
+
+# kos:
+#   - id: restclone
+#     repositories:
+#       - ghcr.io/kommunkod/restclone
+#       - kommun/restclone
+#     tags:
+#       - v{{ .Version }}
+#       - latest
+#     bare: true
+#     user: 65534:65534
+#     platforms:
+#       - linux/arm64
+#       - linux/amd64
+#     env:
+#       - CGO_ENABLED=0
+
+# release:
+#   github:
+#     owner: kommunkod
+#     name: RestClone
 
 

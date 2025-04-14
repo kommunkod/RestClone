@@ -1,0 +1,15 @@
+services:
+  restclone:
+    image: kommun/restclone:latest
+    restart: always
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      RC_LISTEN: ":8080"
+      RC_LISTEN_TLS: ":8443"
+      RC_HOSTNAME: "localhost"
+      RC_AUTH_ENABLED: "true"
+      RC_AUTH_REALM: "RestClone"
+      RC_BASIC_USER: "admin"
+      RC_BASIC_PASS: "admin"
