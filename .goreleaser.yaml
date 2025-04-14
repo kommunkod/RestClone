@@ -14,28 +14,28 @@ changelog:
       - "^test:"
 
 builds:
-  - id: restclone
-    main: ./cmd/http/
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-      - windows
-      # - darwin
-    goarch:
-      - amd64
-      # - arm64
-  - id: restclone-socket
-    main: ./cmd/socket/
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - linux
-      - windows
-      # - darwin
-    goarch:
-      - amd64
-      # - arm64
+  # - id: restclone
+  #   main: ./cmd/http/
+  #   env:
+  #     - CGO_ENABLED=0
+  #   goos:
+  #     - linux
+  #     - windows
+  #     # - darwin
+  #   goarch:
+  #     - amd64
+  #     # - arm64
+  # - id: restclone-socket
+  #   main: ./cmd/socket/
+  #   env:
+  #     - CGO_ENABLED=0
+  #   goos:
+  #     - linux
+  #     - windows
+  #     # - darwin
+  #   goarch:
+  #     - amd64
+  #     # - arm64
   - id: restclone-socket-cshared
     main: ./cmd/socket/
     env:
@@ -44,24 +44,25 @@ builds:
       - linux
     goarch:
       - amd64
+    buildmode: "c-shared"
       # - arm64
-    ldflags:
-      - "-buildmode"
-      - "c-shared"
-      - "-o {{ .ProjectName }}_socket.so"
-  - id: restclone-socket-cshared-win
-    main: ./cmd/socket/
-    env:
-      - CGO_ENABLED=1
-    goos:
-      - windows
-    goarch:
-      - amd64
-      # - arm64
-    ldflags:
-      - "-buildmode"
-      - "c-shared"
-      - "-o {{ .ProjectName }}_socket.dll"
+    # ldflags:
+    #   - "-buildmode"
+    #   - "c-shared"
+    #   - "-o {{ .ProjectName }}_socket.so"
+  # - id: restclone-socket-cshared-win
+  #   main: ./cmd/socket/
+  #   env:
+  #     - CGO_ENABLED=1
+  #   goos:
+  #     - windows
+  #   goarch:
+  #     - amd64
+  #     # - arm64
+  #   ldflags:
+  #     - "-buildmode"
+  #     - "c-shared"
+  #     - "-o {{ .ProjectName }}_socket.dll"
 
 # archives:
 #   - id: restclone

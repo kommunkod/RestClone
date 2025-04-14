@@ -392,8 +392,128 @@ paths:
             type: string
       summary: Bulk Rename Files
       tags:
-      - files
-  /api/v1/compare:
+      - Bulk
+  /api/v1/dir/filterlist:
+    post:
+      consumes:
+      - application/json
+      description: List files in a given directory with a filter
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Filtered List Files
+      tags:
+      - Directory
+  /api/v1/dir/list:
+    post:
+      consumes:
+      - application/json
+      description: List Files
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: List Files
+      tags:
+      - Directory
+  /api/v1/dir/remove:
+    post:
+      consumes:
+      - application/json
+      description: Removes an empty directory
+      parameters:
+      - description: Remove Directory Request
+        in: body
+        name: rmdirsRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Removed successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove Empty Directory
+      tags:
+      - Directory
+  /api/v1/dir/removeRecursive:
+    post:
+      consumes:
+      - application/json
+      description: Recursively remove directories
+      parameters:
+      - description: Remove Directories Request
+        in: body
+        name: rmdirsRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Removed successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Remove Directories
+      tags:
+      - Directory
+  /api/v1/file/compare:
     post:
       consumes:
       - application/json
@@ -422,8 +542,8 @@ paths:
             type: string
       summary: Check if two files are equal
       tags:
-      - files
-  /api/v1/copyFile:
+      - File
+  /api/v1/file/copy:
     post:
       consumes:
       - application/json
@@ -452,8 +572,8 @@ paths:
             type: string
       summary: Copy File
       tags:
-      - files
-  /api/v1/copyUrl:
+      - File
+  /api/v1/file/copyUrl:
     post:
       consumes:
       - application/json
@@ -482,7 +602,67 @@ paths:
             type: string
       summary: Copy URL to destination filesystem
       tags:
-      - files
+      - File
+  /api/v1/file/delete:
+    post:
+      consumes:
+      - application/json
+      description: Delete File
+      parameters:
+      - description: Remote Configuration
+        in: body
+        name: remote
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest'
+      produces:
+      - text/plain
+      responses:
+        "200":
+          description: File deleted successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Delete File
+      tags:
+      - File
+  /api/v1/file/move:
+    post:
+      consumes:
+      - application/json
+      description: Move File
+      parameters:
+      - description: Move File Request
+        in: body
+        name: moveFileRequest
+        required: true
+        schema:
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: File moved successfully
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Move File
+      tags:
+      - File
   /api/v1/file/read:
     post:
       consumes:
@@ -512,7 +692,7 @@ paths:
             type: string
       summary: Read File
       tags:
-      - files
+      - File
   /api/v1/file/write:
     put:
       consumes:
@@ -556,37 +736,7 @@ paths:
             type: string
       summary: Write File
       tags:
-      - files
-  /api/v1/files/delete:
-    post:
-      consumes:
-      - application/json
-      description: Delete File
-      parameters:
-      - description: Remote Configuration
-        in: body
-        name: remote
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest'
-      produces:
-      - text/plain
-      responses:
-        "200":
-          description: File deleted successfully
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Delete File
-      tags:
-      - files
+      - File
   /api/v1/files/moveBackupDir:
     post:
       consumes:
@@ -616,128 +766,8 @@ paths:
             type: string
       summary: Move Backup Dir
       tags:
-      - files
-  /api/v1/files/moveFile:
-    post:
-      consumes:
-      - application/json
-      description: Move File
-      parameters:
-      - description: Move File Request
-        in: body
-        name: moveFileRequest
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: File moved successfully
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Move File
-      tags:
-      - files
-  /api/v1/files/removeDir:
-    post:
-      consumes:
-      - application/json
-      description: Removes an empty directory
-      parameters:
-      - description: Remove Directory Request
-        in: body
-        name: rmdirsRequest
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Removed successfully
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Remove Empty Directory
-      tags:
-      - files
-  /api/v1/files/removeDirs:
-    post:
-      consumes:
-      - application/json
-      description: Recursively remove directories
-      parameters:
-      - description: Remove Directories Request
-        in: body
-        name: rmdirsRequest
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Removed successfully
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Remove Directories
-      tags:
-      - files
-  /api/v1/files/sync:
-    post:
-      consumes:
-      - application/json
-      description: Sync
-      parameters:
-      - description: Sync Request
-        in: body
-        name: syncRequest
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: Synced successfully
-          schema:
-            type: string
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: Sync
-      tags:
-      - files
-  /api/v1/files/syncCopyDir:
+      - File
+  /api/v1/sync/copy:
     post:
       consumes:
       - application/json
@@ -766,8 +796,8 @@ paths:
             type: string
       summary: Sync CopyDir
       tags:
-      - files
-  /api/v1/files/syncMoveDir:
+      - Sync
+  /api/v1/sync/move:
     post:
       consumes:
       - application/json
@@ -796,26 +826,26 @@ paths:
             type: string
       summary: Sync MoveDir
       tags:
-      - files
-  /api/v1/filterlist:
+      - Sync
+  /api/v1/sync/sync:
     post:
       consumes:
       - application/json
-      description: List files in a given directory with a filter
+      description: Sync
       parameters:
-      - description: Remote Configuration
+      - description: Sync Request
         in: body
-        name: remote
+        name: syncRequest
         required: true
         schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest'
+          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncRequest'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: Synced successfully
           schema:
-            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
+            type: string
         "400":
           description: Bad Request
           schema:
@@ -824,37 +854,7 @@ paths:
           description: Internal Server Error
           schema:
             type: string
-      summary: Filtered List Files
+      summary: Sync
       tags:
-      - files
-  /api/v1/list:
-    post:
-      consumes:
-      - application/json
-      description: List Files
-      parameters:
-      - description: Remote Configuration
-        in: body
-        name: remote
-        required: true
-        schema:
-          $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse'
-        "400":
-          description: Bad Request
-          schema:
-            type: string
-        "500":
-          description: Internal Server Error
-          schema:
-            type: string
-      summary: List Files
-      tags:
-      - files
+      - Sync
 swagger: "2.0"

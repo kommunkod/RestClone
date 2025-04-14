@@ -25,7 +25,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "Bulk"
                 ],
                 "summary": "Bulk Rename Files",
                 "parameters": [
@@ -64,7 +64,191 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/compare": {
+        "/api/v1/dir/filterlist": {
+            "post": {
+                "description": "List files in a given directory with a filter",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "Filtered List Files",
+                "parameters": [
+                    {
+                        "description": "Remote Configuration",
+                        "name": "remote",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dir/list": {
+            "post": {
+                "description": "List Files",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "List Files",
+                "parameters": [
+                    {
+                        "description": "Remote Configuration",
+                        "name": "remote",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dir/remove": {
+            "post": {
+                "description": "Removes an empty directory",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "Remove Empty Directory",
+                "parameters": [
+                    {
+                        "description": "Remove Directory Request",
+                        "name": "rmdirsRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Removed successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dir/removeRecursive": {
+            "post": {
+                "description": "Recursively remove directories",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Directory"
+                ],
+                "summary": "Remove Directories",
+                "parameters": [
+                    {
+                        "description": "Remove Directories Request",
+                        "name": "rmdirsRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Removed successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/file/compare": {
             "post": {
                 "description": "Check if two files are equal",
                 "consumes": [
@@ -74,7 +258,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Check if two files are equal",
                 "parameters": [
@@ -110,7 +294,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/copyFile": {
+        "/api/v1/file/copy": {
             "post": {
                 "description": "Copy File",
                 "consumes": [
@@ -120,7 +304,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Copy File",
                 "parameters": [
@@ -156,7 +340,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/copyUrl": {
+        "/api/v1/file/copyUrl": {
             "post": {
                 "description": "Copy URL to destination filesystem",
                 "consumes": [
@@ -166,7 +350,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Copy URL to destination filesystem",
                 "parameters": [
@@ -202,6 +386,98 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/v1/file/delete": {
+            "post": {
+                "description": "Delete File",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "text/plain"
+                ],
+                "tags": [
+                    "File"
+                ],
+                "summary": "Delete File",
+                "parameters": [
+                    {
+                        "description": "Remote Configuration",
+                        "name": "remote",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File deleted successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/file/move": {
+            "post": {
+                "description": "Move File",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "File"
+                ],
+                "summary": "Move File",
+                "parameters": [
+                    {
+                        "description": "Move File Request",
+                        "name": "moveFileRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "File moved successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/file/read": {
             "post": {
                 "description": "Read File",
@@ -212,7 +488,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Read File",
                 "parameters": [
@@ -258,7 +534,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Write File",
                 "parameters": [
@@ -312,52 +588,6 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/files/delete": {
-            "post": {
-                "description": "Delete File",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "text/plain"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Delete File",
-                "parameters": [
-                    {
-                        "description": "Remote Configuration",
-                        "name": "remote",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.DeleteFileRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "File deleted successfully",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/files/moveBackupDir": {
             "post": {
                 "description": "Move a file to a backup directory",
@@ -368,7 +598,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "File"
                 ],
                 "summary": "Move Backup Dir",
                 "parameters": [
@@ -404,191 +634,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/files/moveFile": {
-            "post": {
-                "description": "Move File",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Move File",
-                "parameters": [
-                    {
-                        "description": "Move File Request",
-                        "name": "moveFileRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.MoveFileRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "File moved successfully",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/files/removeDir": {
-            "post": {
-                "description": "Removes an empty directory",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Remove Empty Directory",
-                "parameters": [
-                    {
-                        "description": "Remove Directory Request",
-                        "name": "rmdirsRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Removed successfully",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/files/removeDirs": {
-            "post": {
-                "description": "Recursively remove directories",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Remove Directories",
-                "parameters": [
-                    {
-                        "description": "Remove Directories Request",
-                        "name": "rmdirsRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.RmdirsRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Removed successfully",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/files/sync": {
-            "post": {
-                "description": "Sync",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "Sync",
-                "parameters": [
-                    {
-                        "description": "Sync Request",
-                        "name": "syncRequest",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Synced successfully",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/files/syncCopyDir": {
+        "/api/v1/sync/copy": {
             "post": {
                 "description": "Sync CopyDir",
                 "consumes": [
@@ -598,7 +644,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "Sync"
                 ],
                 "summary": "Sync CopyDir",
                 "parameters": [
@@ -634,7 +680,7 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/files/syncMoveDir": {
+        "/api/v1/sync/move": {
             "post": {
                 "description": "Sync MoveDir",
                 "consumes": [
@@ -644,7 +690,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "Sync"
                 ],
                 "summary": "Sync MoveDir",
                 "parameters": [
@@ -680,9 +726,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/api/v1/filterlist": {
+        "/api/v1/sync/sync": {
             "post": {
-                "description": "List files in a given directory with a filter",
+                "description": "Sync",
                 "consumes": [
                     "application/json"
                 ],
@@ -690,71 +736,25 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "files"
+                    "Sync"
                 ],
-                "summary": "Filtered List Files",
+                "summary": "Sync",
                 "parameters": [
                     {
-                        "description": "Remote Configuration",
-                        "name": "remote",
+                        "description": "Sync Request",
+                        "name": "syncRequest",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.FilteredListFilesRequest"
+                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.SyncRequest"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
+                        "description": "Synced successfully",
                         "schema": {
                             "type": "string"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/list": {
-            "post": {
-                "description": "List Files",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "files"
-                ],
-                "summary": "List Files",
-                "parameters": [
-                    {
-                        "description": "Remote Configuration",
-                        "name": "remote",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_kommunkod_restclone_pkg_rclone.ListFilesResponse"
                         }
                     },
                     "400": {
