@@ -45,6 +45,7 @@ builds:
     goarch:
       - amd64
     buildmode: "c-shared"
+
       # - arm64
     # ldflags:
     #   - "-buildmode"
