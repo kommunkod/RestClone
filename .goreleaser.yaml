@@ -25,6 +25,17 @@ builds:
     goarch:
       - amd64
       - arm64
+  - id: restclone-socket
+    main: ./cmd/socket/
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - amd64
+      - arm64
 
 archives:
   - id: restclone
