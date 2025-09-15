@@ -22,3 +22,8 @@ func StartSocket(socketPath *C.char) *C.char {
 
 	return C.CString("Socket server finished")
 }
+
+func main() {
+	// This is required for the cgo build to work
+	// but we don't need to do anything here
+}

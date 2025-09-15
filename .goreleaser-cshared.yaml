@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+version: 2
+
+dist: ./dist-cshared
+
+before:
+  hooks:
+    - go mod tidy
+    - go tool swag init -g cmd/http/main.go --output docs --md . --parseDependency
+
+builds:
+  - id: restclone-cshared
+    main: ./cmd/socket-cshared/
+    buildmode: c-shared
+    builder: go
+    
+    env:
+      - CGO_ENABLED=1
+    goos:
+      - linux
+    goarch:
+      - amd64
