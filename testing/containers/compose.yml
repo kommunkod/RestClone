@@ -1,0 +1,19 @@
+x-common: &common
+  image: rclone/rclone:latest
+  volumes:
+      - ./files:/files
+
+services:
+  ftp:
+    <<: *common
+    container_name: ftp
+    command: serve ftp /files --addr 0.0.0.0:21 --user testuser --pass testpassword --passive-port 10000-10010
+    ports:
+      - "21:21"
+      - "10000-10010:10000-10010"
+  sftp:
+    <<: *common
+    container_name: sftp
+    command: serve sftp /files --addr 0.0.0.0:2222 --user testuser --pass testpassword
+    ports:
+      - "2222:2222"

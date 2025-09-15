@@ -37,3 +37,4 @@ dist/*
 
 dist-cshared/*
 test/*
+testing/containers/files/*
