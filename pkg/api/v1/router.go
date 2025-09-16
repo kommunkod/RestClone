@@ -6,7 +6,7 @@ import (
 	"github.com/kommunkod/restclone/pkg/api/v1/dir"
 	"github.com/kommunkod/restclone/pkg/api/v1/file"
 	"github.com/kommunkod/restclone/pkg/api/v1/sync"
-	_ "github.com/rclone/rclone/backend/all"
+	// _ "github.com/rclone/rclone/backend/all"
 )
 
 func RegisterRoutes(router *mux.Router) {

@@ -38,3 +38,7 @@ dist/*
 dist-cshared/*
 test/*
 testing/containers/files/*
+
+testing/csharp/*
+!testing/csharp/Program.cs
+!testing/csharp/csharp.csproj
