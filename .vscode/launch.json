@@ -35,13 +35,20 @@
             "projectPath": "${workspaceFolder}/testing/csharp/csharp.csproj"
         },
         {
+            "name": "C#: testing/csharp xDebug",
+            "type": "dotnet",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "projectPath": "${workspaceFolder}/src/Kommunkod.Restclone.Test/Kommunkod.Restclone.Test.csproj"
+        },
+        {
             // Use IntelliSense to find out which attributes exist for C# debugging
             // Use hover for the description of the existing attributes
             // For further information visit https://github.com/dotnet/vscode-csharp/blob/main/debugger-launchjson.md
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "dotnet: build",
+            "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
             "program": "${workspaceFolder}/src/Kommunkod.Restclone.Test/bin/Debug/net8.0/Kommunkod.Restclone.Test.dll",
             "args": ["run", "debug"],
