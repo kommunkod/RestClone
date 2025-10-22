@@ -42,3 +42,7 @@ testing/containers/files/*
 testing/csharp/*
 !testing/csharp/Program.cs
 !testing/csharp/csharp.csproj
+src/*/obj
+src/*/bin
+src/*/*.dll
+src/*/*.h

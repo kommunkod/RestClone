@@ -1,12 +1,6 @@
 ﻿using System.Runtime.InteropServices;
-using System.Text;
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.Tasks;
-using System.IO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 
 // See https://aka.ms/new-console-template for more information
@@ -15,47 +9,132 @@ using System.Linq;
 // Console.WriteLine("Hello, World!");
 // StartSocket("/tmp/restclone.sock");
 
+class Go {
+    public struct GoString
+    {
+        public IntPtr p;
+        public Int64 n;
+    }
+
+    public struct RequestFormat
+    {
+        public string Method;
+        public string Url;
+        public Dictionary<string, List<string>> Headers;
+        public string Body;
+
+        public string Serialize()
+        {
+            var data = JsonSerializer.Serialize(new
+            {
+                method = this.Method,
+                url = this.Url,
+                headers = this.Headers,
+                body = this.Body
+            });
+
+            var b64data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
+            return b64data;
+        }
+    }
+
+    public struct ResponseFormat
+    {
+        [JsonPropertyName("StatusCode")]
+        public int StatusCode { get; set;  }
+        
+        [JsonPropertyName("StatusInfo")]
+        public string StatusInfo { get; set;  }
+        
+        [JsonPropertyName("Headers")]
+        public Dictionary<string, List<string>> Headers { get; set;  }
+        
+        [JsonPropertyName("Body")]
+        public string Body { get; set;  }
+
+        public static ResponseFormat Deserialize(string data)
+        {
+            var decodedBytes = Convert.FromBase64String(data);
+            var obj = JsonSerializer.Deserialize<ResponseFormat>(System.Text.Encoding.UTF8.GetString(decodedBytes));
+            return obj;
+        }
+
+        public string GetBody()
+        {
+            var decodedBytes = Convert.FromBase64String(this.Body);
+            return System.Text.Encoding.UTF8.GetString(decodedBytes);
+        }
+    }
+
+    static class Func
+    {
+        [DllImport("./restclone.dll", CharSet = CharSet.Unicode, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.LPStr)] 
+        public static extern string Operation(GoString s);
+    }
+
+    public static ResponseFormat Exec(RequestFormat request) {
+        var input = request.Serialize();
+        Console.WriteLine(input);
+        GoString s = new GoString
+        {  
+            p = Marshal.StringToHGlobalAnsi(input),
+            n = input.Length
+        };
+
+        var retstr = Func.Operation(s);
+
+        var response = ResponseFormat.Deserialize(retstr);
+
+        Marshal.FreeHGlobal(s.p);
+
+        return response;
+    }
+}
+
 class Program
 {
-    [DllImport("./restclone", EntryPoint = "StartSocket")]
-    extern static int StartSocket(string path);
-
-
-    static async Task Main(string[] args)
+    static void Main(string[] args)
     {
-        var task = Task.Run(()  => {
-            StartSocket("/tmp/restclone.sock");
-            
-            // Remove socket if exists
-            if (File.Exists("/tmp/restclone.sock"))
-            {
-                File.Delete("/tmp/restclone.sock");
-            }
-        });
-        Console.WriteLine("Waiting for socket to be ready...");
-        await Task.Delay(5500);
-        Console.WriteLine("Socket should be ready now.");  
-
-
-        // Console.WriteLine("Hello, World!");
-        // StartSocket("/tmp/restclone.sock");
-
-        // await Task.Delay(-1);
-
-        // Get /docs/ on socket addr
-        using (var client = new Socket(AddressFamily.Unix, SocketType.Stream, 0))
+        var req = new Go.RequestFormat
         {
-            client.Connect(new UnixDomainSocketEndPoint("/tmp/restclone.sock"));
-            // client.Connect("/tmp/restclone.sock");
-            using (var stream = new NetworkStream(client))
-            using (var reader = new StreamReader(stream))
-            using (var writer = new StreamWriter(stream) { AutoFlush = true })
+            Method = "POST",
+            Url = "http://localhost/api/v1/dir/list",
+            Headers = new Dictionary<string, List<string>>
             {
-                var request = "GET /docs/ HTTP/1.1\r\nHost: localhost\r\n\r\n";
-                await writer.WriteAsync(request);
-                var response = await reader.ReadToEndAsync();
-                Console.WriteLine(response);
-            }
+                { "Content-Type", new List<string> { "application/json" } }
+            },
+        };
+
+        var Body = new {
+            remote = new {
+                name = "myremote",
+                type = "local",
+                parameters = new
+                {
+                    nounc = true
+                }
+            },
+            path = "",
+            recurse = false,
+        };
+
+        var serialized = JsonSerializer.Serialize(Body);
+        Console.WriteLine(serialized);
+        req.Body = serialized;
+
+        var response = Go.Exec(req);
+
+        Console.WriteLine("Response: ", response);
+
+        Console.WriteLine($"Status: {response.StatusCode} {response.StatusInfo}");
+        Console.WriteLine("Headers:");
+        foreach (var header in response.Headers)
+        {
+            Console.WriteLine($"{header.Key}: {string.Join(", ", header.Value)}");
         }
+
+        Console.WriteLine("Body:");
+        Console.WriteLine(response.GetBody());
     }
 }
