@@ -1,6 +1,7 @@
 package main
 
-// #cgo CFLAGS: -g -Wall
+// #cgo CFLAGS: -g3
+// #cgo CXXFLAGS: -g3
 // #include <stdlib.h>
 
 import "C"

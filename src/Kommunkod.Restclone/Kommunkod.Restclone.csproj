@@ -22,6 +22,14 @@
     <RepositoryUrl>https://github.com/kommunkod/restclone</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Include="restclone.dll" Pack="true" PackagePath="/">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

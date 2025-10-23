@@ -36,6 +36,21 @@ public class Go
     }
 }
 
+[Serializable]
+public class InvalidConfigurationException : Exception
+{
+    public InvalidConfigurationException ()
+    {}
+
+    public InvalidConfigurationException (string message) 
+        : base(message)
+    {}
+
+    public InvalidConfigurationException (string message, Exception innerException)
+        : base (message, innerException)
+    {}    
+}
+
 
 /// <summary>
 /// Interop class for handling communication between C# and Go.
@@ -54,7 +69,9 @@ public class Interop
 
         public void SetBody(object body)
         {
-            this.Body = JsonConvert.SerializeObject(body);
+            this.Body = Newtonsoft.Json.JsonConvert.SerializeObject(body, new JsonSerializerSettings { 
+                NullValueHandling = NullValueHandling.Ignore
+            });
         }
 
         public string Serialize()
@@ -66,6 +83,8 @@ public class Interop
                 url = this.Url,
                 headers = this.Headers,
                 body = this.Body
+            }, new JsonSerializerSettings { 
+                NullValueHandling = NullValueHandling.Ignore
             });
 
             var b64data = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(data));
@@ -118,6 +137,8 @@ public class Interop
         [JsonPropertyName("Body")]
         public string Body { get; set; }
 
+        private string jsonResponse { get; set; }
+
         /// <summary>
         /// Deserialize a base64-encoded JSON string into a ResponseFormat object.
         /// </summary>
@@ -126,6 +147,8 @@ public class Interop
         public static ResponseFormat<T> Deserialize(string data)
         {
             var decodedBytes = Convert.FromBase64String(data);
+            
+            Console.WriteLine(System.Text.Encoding.UTF8.GetString(decodedBytes));
 
             var reader = new Utf8JsonReader(decodedBytes);
 
@@ -143,15 +166,30 @@ public class Interop
             return System.Text.Encoding.UTF8.GetString(decodedBytes);
         }
 
+        public void DecodeBody()
+        {
+            if (this.jsonResponse == null)
+            {
+                var decodedBytes = Convert.FromBase64String(this.Body);
+                this.jsonResponse = System.Text.Encoding.UTF8.GetString(decodedBytes);    
+            }
+        }
+
+        public Exception? IsError()
+        {
+
+            this.DecodeBody();
+            return this.StatusCode > 299 ? new InvalidConfigurationException(this.jsonResponse) : null;
+        }
+
         /// <summary>
         /// Decode the body of the response into an object of type T.
         /// </summary>
         /// <returns>An object of type T</returns>
-        public T? DecodeBody()
+        public T? GetBodyObject()
         {
-            var decodedBytes = Convert.FromBase64String(this.Body);
-            var jsonString = System.Text.Encoding.UTF8.GetString(decodedBytes);
-            return System.Text.Json.JsonSerializer.Deserialize<T>(jsonString);
+            this.DecodeBody();
+            return System.Text.Json.JsonSerializer.Deserialize<T>(this.jsonResponse);
         }
     }
 }
